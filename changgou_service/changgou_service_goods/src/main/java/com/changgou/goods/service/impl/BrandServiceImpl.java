@@ -92,6 +92,14 @@ public class BrandServiceImpl implements BrandService {
         return (Page<Brand>) brandMapper.selectAll();
     }
 
+    /**
+     * 分页搜索查询
+     * @param searchMap
+     * @param page
+     * @param size
+     * @return
+     */
+
     @Override
     public Page<Brand> findPage(Map<String, Object> searchMap, int page, int size) {
         PageHelper.startPage(page,size);
@@ -111,6 +119,16 @@ public class BrandServiceImpl implements BrandService {
         }
         return (Page<Brand>)brandMapper.selectByExample(example);
 
+    }
+
+    /**
+     * 根据商品名称查询品牌列表
+     * @param categoryName
+     * @return
+     */
+    @Override
+    public List<Map> findListByCategoryName(String categoryName) {
+        return brandMapper.findListByCategoryName(categoryName);
     }
 
 
