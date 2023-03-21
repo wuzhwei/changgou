@@ -6,8 +6,33 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="changgou" />
+        <module name="changgou_common" />
+        <module name="changgou_common_db" />
+        <module name="changgou-user-oauth" />
+        <module name="changgou_web" />
+        <module name="changgou_eureka" />
+        <module name="changgou_gateway" />
+        <module name="changgou_canal" />
+        <module name="changgou_task" />
+        <module name="changgou_common_fescar" />
+        <module name="changgou_service" />
+        <module name="changgou_service_api" />
       </profile>
     </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="changgou-user-oauth" options="-parameters" />
+      <module name="changgou_canal" options="-parameters" />
+      <module name="changgou_common" options="-parameters" />
+      <module name="changgou_common_db" options="-parameters" />
+      <module name="changgou_common_fescar" options="-parameters" />
+      <module name="changgou_eureka" options="-parameters" />
+      <module name="changgou_gateway" options="-parameters" />
+      <module name="changgou_service" options="-parameters" />
+      <module name="changgou_service_api" options="-parameters" />
+      <module name="changgou_task" options="-parameters" />
+      <module name="changgou_web" options="-parameters" />
+    </option>
   </component>
 </project>
