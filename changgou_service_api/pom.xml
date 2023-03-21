@@ -10,6 +10,32 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>changgou_service_api</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>changgou_service_goods_api</module>
+        <!--        <module>changgou_service_system_api</module>-->
+        <!--        <module>changgou_service_business_api</module>-->
+        <!--        <module>changgou_service_search_api</module>-->
+        <!--        <module>changgou_service_user_api</module>-->
+        <!--        <module>changgou_service_order_api</module>-->
+        <!--        <module>changgou_service_pay_api</module>-->
+        <!--        <module>changgou_service_seckill_api</module>-->
+        <!--        <module>changgou-service-logistics-api</module>-->
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
 </project>
