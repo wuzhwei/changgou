@@ -3,7 +3,11 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/changgou_common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changgou_eureka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/changgou_gateway/changgou_gateway_system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/changgou_service/changgou_service_file/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changgou_service/changgou_service_goods/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/changgou_service/changgou_service_system/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changgou_service_api/changgou_service_goods_api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/changgou_service_api/changgou_service_system_api/src/main/java" charset="UTF-8" />
   </component>
 </project>

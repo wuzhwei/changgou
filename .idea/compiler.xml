@@ -8,15 +8,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="changgou_common_db" />
-        <module name="changgou_common" />
         <module name="changgou-user-oauth" />
         <module name="changgou_eureka" />
+        <module name="changgou_common_fescar" />
+        <module name="changgou_service_system_api" />
+        <module name="changgou_common" />
+        <module name="changgou_service_file" />
+        <module name="changgou_service_system" />
         <module name="changgou_web" />
         <module name="changgou_service_goods_api" />
-        <module name="changgou_gateway" />
+        <module name="changgou_gateway_system" />
         <module name="changgou_canal" />
         <module name="changgou_task" />
-        <module name="changgou_common_fescar" />
         <module name="changgou_service_goods" />
       </profile>
     </annotationProcessing>
@@ -30,10 +33,14 @@
       <module name="changgou_common_fescar" options="-parameters" />
       <module name="changgou_eureka" options="-parameters" />
       <module name="changgou_gateway" options="-parameters" />
+      <module name="changgou_gateway_system" options="-parameters" />
       <module name="changgou_service" options="-parameters" />
       <module name="changgou_service_api" options="-parameters" />
+      <module name="changgou_service_file" options="-parameters" />
       <module name="changgou_service_goods" options="-parameters" />
       <module name="changgou_service_goods_api" options="-parameters" />
+      <module name="changgou_service_system" options="-parameters" />
+      <module name="changgou_service_system_api" options="-parameters" />
       <module name="changgou_task" options="-parameters" />
       <module name="changgou_web" options="-parameters" />
     </option>
