@@ -11,6 +11,7 @@
 
     <modules>
         <module>changgou_gateway</module>
+        <module>changgou_service</module>
         <module>changgou_service/changgou_service_goods</module>
         <module>changgou_service_api</module>
         <module>changgou_common_fescar</module>
