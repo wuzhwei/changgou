@@ -42,8 +42,68 @@ public class SpuController {
      */
     @PutMapping(value = "/{id}")
     public Result update(@RequestBody Goods goods,@PathVariable String id){
+        goods.getSpu().setId(id);
         spuService.update(goods);
         return Result.builder().flag(true).code(StatusCode.OK).message("修改成功").build();
     }
+
+    /**
+     * 审核
+     * @param id
+     * @return
+     */
+    @PutMapping("/audit/{id}")
+    public Result audit(@PathVariable String id){
+        spuService.audit(id);
+        return new Result();
+
+    }
+
+    /**
+     * 下架
+     * @param id
+     * @return
+     */
+    @PutMapping("/pull/{id}")
+    public Result pull(@PathVariable String id){
+        spuService.pull(id);
+        return new Result();
+    }
+
+    /**
+     * 上架
+     * @param id
+     * @return
+     */
+    @PutMapping("/push/{id}")
+    public Result push(@PathVariable String id){
+        spuService.push(id);
+        return new Result();
+    }
+
+    /**
+     * 恢复数据
+     * @param id
+     * @return
+     */
+    @PutMapping("/restore/{id}")
+    public Result restore(@PathVariable String id){
+        spuService.restore(id);
+        return new Result();
+    }
+
+    /**
+     * 物理删除
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/realDelete/{id}")
+    public Result realDelete(@PathVariable String id){
+        spuService.realDelete(id);
+        return new Result();
+    }
+
+
+
 
 }

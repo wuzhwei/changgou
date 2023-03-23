@@ -1,7 +1,6 @@
 package com.changgou.file.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.aliyuncs.utils.StringUtils;
 import com.changgou.common.pojo.Result;
 import com.changgou.common.pojo.StatusCode;
 import com.changgou.file.pojo.FastDFSFile;
