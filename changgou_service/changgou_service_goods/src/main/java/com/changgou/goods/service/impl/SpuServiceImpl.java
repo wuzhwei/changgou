@@ -1,6 +1,8 @@
 package com.changgou.goods.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.changgou.goods.dao.BrandMapper;
 import com.changgou.goods.dao.CategoryMapper;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import cn.hutool.core.lang.Snowflake;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +30,9 @@ public class SpuServiceImpl implements SpuService {
     CategoryMapper categoryMapper;
     @Autowired
     SkuMapper skuMapper;
+
+
+
     @Transactional
     @Override
     public void add(Goods goods) {
@@ -42,51 +48,91 @@ public class SpuServiceImpl implements SpuService {
     }
 
     /**
-     * 保存sku列表
-     * @param goods
+     * 根据ID查询商品
+     * @param id
+     * @return
      */
+    @Override
+    public Goods findGoodsById(String id) {
+        //查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(id);
+        //设置查询条件
+        Example example = new Example(Sku.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("spuId",id);
+        //查询SKU 列表
+        List<Sku> skuList = skuMapper.selectByExample(example);
+        //封装返回
+        Goods goods = new Goods();
+        goods.setSpu(spu);
+        goods.setSkuList(skuList);
+        return goods;
+    }
 
-    private void saveSkuList(Goods goods) {
-        //获取spu对象
+    @Override
+    public void update(Goods goods) {
+        //取出spu部分
         Spu spu = goods.getSpu();
-        //当前日期
-        Date date = new Date();
-        //获取对象品牌
-        Brand brand = brandMapper.selectByPrimaryKey(spu.getBrandId());
-        //获取分类对象
-        Category category = categoryMapper.selectByPrimaryKey(spu.getCategory3Id());
-        //获取sku集合对象
-        List<Sku> skuList = goods.getSkuList();
-        if (skuList != null){
-            for (Sku sku: skuList) {
-                //设置sku主键ID
-                sku.setId(snowflake.nextIdStr());
-                //设置sku规格
-                if (sku.getSpec() == null || "".equals(sku.getSpec())){
-                    sku.setSpec("{}");
-                }
-                //设置sku名称(商品名称+规格)
-                String name = spu.getName();
-                //将规格json字符串转换为Map
-                Map<String,String> specMap = JSON.parseObject(sku.getSpec(), Map.class);
+        spuMapper.updateByPrimaryKey(spu);
+        //删除原sku列表
+        Example example = new Example(Sku.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("spuId",spu.getId());
+        skuMapper.deleteByExample(example);
+        //保存sku列表
+        saveSkuList(goods);
 
-                if (specMap != null && specMap.size() > 0){
-                    for (String value:
-                         specMap.values()) {
-                        name+=" "+value;
+    }
+
+
+    /**
+     * 添加sku数据
+     *
+     * @param goods 商品信息
+     */
+    private void saveSkuList(Goods goods) {
+        Spu spu = goods.getSpu();
+        // 查询分类对象
+        Category category = categoryMapper.selectByPrimaryKey( spu.getCategory3Id() );
+        // 查询品牌对象
+        Brand brand = brandMapper.selectByPrimaryKey( spu.getBrandId() );
+
+        // 获取sku集合
+        List<Sku> skuList = goods.getSkuList();
+        if (ObjectUtil.isNotEmpty( skuList )) {
+            // 遍历sku集合,循环填充数据并添加到数据库中
+            for (Sku sku : skuList) {
+                // 设置skuId
+                sku.setId( snowflake.nextIdStr() );
+                // 设置sku规格数据
+                String skuSpec = sku.getSpec();
+                if (StrUtil.isEmpty( skuSpec )) {
+                    sku.setSpec( "{}" );
+                }
+                // 设置sku名称(spu名称+规格)
+                StringBuilder spuName = new StringBuilder( spu.getName() );
+                Map<String, String> specMap = JSON.parseObject( skuSpec, Map.class );
+                if (ObjectUtil.isNotEmpty( specMap )) {
+                    for (String value : specMap.values()) {
+                        spuName.append( " " ).append( value );
                     }
                 }
-                sku.setName(name);//名称
-                sku.setSpec(spu.getId());//设置spu的ID
-                sku.setCreateTime(date);//创建日期
-                sku.setUpdateTime(date);//修改日期
-                sku.setCategoryId(category.getId());//商品分类ID
-                sku.setCategoryName(category.getName());//商品名称
-                sku.setBrandName(brand.getName());//品牌名称
-                skuMapper.insertSelective(sku);//插入sku表数据
-
+                sku.setName( spuName.toString() );
+                // 设置spuId
+                sku.setSpuId( spu.getId() );
+                // 设置创建与修改时间
+                //FIXME: 2020/2/16 18:04 此处时间应采用数据库时间函数
+                sku.setCreateTime( new Date() );
+                sku.setUpdateTime( new Date() );
+                // 设置商品分类id
+                sku.setCategoryId( category.getId() );
+                // 设置商品分类名称
+                sku.setCategoryName( category.getName() );
+                // 设置品牌名称
+                sku.setBrandName( brand.getName() );
+                // 将sku添加到数据库
+                skuMapper.insertSelective( sku );
             }
         }
-
     }
 }
