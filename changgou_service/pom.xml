@@ -15,6 +15,7 @@
         <module>changgou_service_goods</module>
         <module>changgou_service_file</module>
         <module>changgou_service_system</module>
+        <module>changgou_service_business</module>
     </modules>
 
 
