@@ -25,7 +25,7 @@ public class BusinessListener {
 
             }
         }
-        //获取改变之前的数据
+//        获取改变之前的数据
         rowData.getBeforeColumnsList().forEach((c)-> System.out.println("改变之前的数据："+c.getName()+"::"+c.getValue()));
         //获取改变之后的数据
         rowData.getAfterColumnsList().forEach((c)-> System.out.println("改变之后的数据："+c.getName()+"::"+c.getValue()));

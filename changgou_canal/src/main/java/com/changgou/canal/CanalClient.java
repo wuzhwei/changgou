@@ -13,7 +13,7 @@ import com.alibaba.otter.canal.protocol.CanalEntry.EventType;
 public class CanalClient {
     public static void main(String args[]) {
         CanalConnector connector = CanalConnectors.newSingleConnector(
-                new InetSocketAddress("localhost", 11111), "example", "", "");
+                new InetSocketAddress("192.168.31.6", 11111), "example", "", "");
 
         try {
             connector.connect();

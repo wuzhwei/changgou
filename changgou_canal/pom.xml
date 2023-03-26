@@ -15,6 +15,17 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.alibaba.otter</groupId>
+            <artifactId>canal.client</artifactId>
+            <version>1.0.25</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.xpand</groupId>-->
+<!--            <artifactId>xpand-starter-canal</artifactId>-->
+<!--            <version>1.2.2.RELEASE</version>-->
+<!--        </dependency>-->
+
+        <dependency>
             <groupId>com.xpand</groupId>
             <artifactId>starter-canal</artifactId>
             <version>0.0.1-SNAPSHOT</version>
