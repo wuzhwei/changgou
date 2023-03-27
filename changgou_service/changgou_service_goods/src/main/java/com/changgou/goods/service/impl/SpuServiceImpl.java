@@ -46,6 +46,10 @@ public class SpuServiceImpl implements SpuService {
         saveSkuList(goods);
 
     }
+    @Override
+    public Spu findById(String id) {
+        return spuMapper.selectByPrimaryKey( id );
+    }
 
     /**
      * 根据ID查询商品

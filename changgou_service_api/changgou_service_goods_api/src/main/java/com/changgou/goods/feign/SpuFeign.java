@@ -15,5 +15,5 @@ public interface SpuFeign {
      * @return id 对应数据
      */
     @GetMapping("/spu/findSpuById/{id}")
-    public Result<Spu> findSpuById(@PathVariable("id") String id);
+    Result<Spu> findSpuById(@PathVariable("id") String id);
 }

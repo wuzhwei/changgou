@@ -1,5 +1,6 @@
 package com.changgou.search.service.Impl;
 
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.aliyuncs.utils.StringUtils;

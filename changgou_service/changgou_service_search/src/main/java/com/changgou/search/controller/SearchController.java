@@ -2,6 +2,7 @@ package com.changgou.search.controller;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.changgou.common.pojo.Page;
+
 import com.changgou.search.pojo.SkuInfo;
 import com.changgou.search.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller
-@RequestMapping("/sku_search")
+@RequestMapping("/search")
 public class SearchController {
 //    @Autowired
 //    private ESManagerService esManagerService;
@@ -50,17 +51,18 @@ public class SearchController {
     @GetMapping("/list")
     public String search(@RequestParam Map<String,String> paramMap, Model model) throws  Exception{
         //特殊符号处理
-        handlerSearchMap(paramMap);
+        this.handlerSearchMap(paramMap);
         //执行查询返回值
         Map<String,Object> resultMap = searchService.search(paramMap);
+        System.out.println(resultMap);
         model.addAttribute("paramMap",paramMap);
         model.addAttribute("result",resultMap);
         //封装分页数据并返回
         //1.总记录数
         //2.当前页数
         //3.每页显示条数
-        Page<SkuInfo> page = new Page<>(Long.parseLong(String.valueOf(paramMap.get("total"))),
-                Integer.parseInt(String.valueOf(paramMap.get("pageNum"))),
+        Page<SkuInfo> page = new Page<>(Long.parseLong(String.valueOf(resultMap.get("total"))),
+                Integer.parseInt(String.valueOf(resultMap.get("pageNum"))),
                 Page.pageSize);
         model.addAttribute("page",page);
 

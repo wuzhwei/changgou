@@ -1,6 +1,7 @@
 package com.changgou.goods.service;
 
 import com.changgou.goods.pojo.Goods;
+import com.changgou.goods.pojo.Spu;
 
 import java.util.List;
 
@@ -11,6 +12,13 @@ public interface SpuService {
      * @param goods
      */
     void add(Goods goods);
+    /**
+     * 根据ID查询SPU
+     *
+     * @param id Spu id
+     * @return Spu信息
+     */
+    Spu findById(String id);
 
     /**
      * 根据ID查询商品
