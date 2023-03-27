@@ -38,7 +38,7 @@ public class PageServiceImpl implements PageService {
     private String pagepath;
 
     @Override
-    public void generateItemPage(String spuId) {
+    public void generateHtml(String spuId) {
         //1.获取context对象，用于存储商品的相关数据
         Context context = new Context();
         //获取静态化页面数据
@@ -105,5 +105,4 @@ public class PageServiceImpl implements PageService {
 
         return map;
     }
-
 }

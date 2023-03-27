@@ -15,5 +15,5 @@ public interface CategoryFeign {
      * @return 指定id分类信息
      */
     @GetMapping("/category/{id}")
-    public Result<Category> findById(@PathVariable("id") Integer id);
+    Result<Category> findById(@PathVariable("id") Integer id);
 }

@@ -18,7 +18,6 @@ import java.util.Map;
  * @date 2020/8/8 15:56
  **/
 @RestController
-@CrossOrigin
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired

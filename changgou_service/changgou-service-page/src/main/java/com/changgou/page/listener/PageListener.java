@@ -14,6 +14,6 @@ public class PageListener {
     public  void receiveMessage(String spuId){
         System.out.println("生成商品详细页面,商品id为: "+spuId);
         //生成静态化页面
-        pageService.generateItemPage(spuId);
+        pageService.generateHtml(spuId);
     }
 }
