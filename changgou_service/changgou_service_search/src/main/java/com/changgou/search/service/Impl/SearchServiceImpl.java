@@ -158,6 +158,56 @@ public class SearchServiceImpl implements SearchService {
         }
         return null;
     }
+
+    /**
+     * 原有数据
+     * [
+     * "{'颜色':'黑色','尺码':'平光防蓝光-无度数电脑手机护目镜'}",
+     * "{'颜色':'红色','尺码':'150度'"}"
+     * ]
+     * 需要数据格式
+     * {
+     *     颜色:[黑色,红色],
+     *     尺码:[100度,150度]
+     * }
+     *
+     * @param specList  规格数据
+     * @return          转换后的map
+     */
+
+    public Map<String,Set<String>> formatSpec(List<String> specList){
+        HashMap<String, Set<String>> resultMap = new HashMap<>();
+        if (specList  != null && specList.size() > 0){
+            //specJsonString ={'颜色':'蓝色','版本':'6GB+128GB'}
+            for (String specJsonString:
+                 specList) {
+                /**  将获取到的json转换为map
+                 *  map={
+                 *      key = 颜色 value=蓝色
+                 *      key=  版本 value=6GB+128GB
+                 *  }
+                 */
+
+                Map<String,String> specMap = JSON.parseObject(specJsonString, Map.class);
+                for (String specKey:
+                     specMap.keySet()) {
+                    //拿到第一个key{颜色，版本}
+                    Set<String> specSet = resultMap.get(specKey);
+                    //判断是都在map中存在此key的set
+                    if (specSet == null){
+                        specSet = new HashSet<String>();
+                    }
+                    //将规格的值放入set中  {蓝色}{6GB+128GB}
+                    specSet.add(specMap.get(specKey));
+                    //将set放入map中{key=颜色，value=set{蓝色}}{key=版本,value=set{6GB+128GB}}
+                    resultMap.put(specKey,specSet);
+                }
+            }
+
+        }
+        return resultMap;
+    }
+
     //处理规格集合
     public Map<String, Set<String>> specList(List<String> specList){
         HashMap<String, Set<String>> specMap = new HashMap<>();

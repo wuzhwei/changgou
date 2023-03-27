@@ -20,6 +20,7 @@
         <module name="changgou_web" />
         <module name="changgou_service_goods_api" />
         <module name="changgou_gateway_system" />
+        <module name="changgou-service-page" />
         <module name="changgou_task" />
         <module name="changgou_canal" />
         <module name="changgou_service_search" />
@@ -30,6 +31,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="changgou-service-page" options="-parameters" />
       <module name="changgou-user-oauth" options="-parameters" />
       <module name="changgou_canal" options="-parameters" />
       <module name="changgou_common" options="-parameters" />
