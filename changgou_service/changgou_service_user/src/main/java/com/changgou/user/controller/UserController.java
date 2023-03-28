@@ -29,7 +29,7 @@ public class UserController {
      * @return 所有用户信息
      */
     @GetMapping
-//    @PreAuthorize("hasAnyAuthority('user')")
+    @PreAuthorize("hasAnyAuthority('user')")
     public Result<List<User>> findAll() {
         return Result.<List<User>>builder()
                 .flag( true )

@@ -36,7 +36,7 @@ public class CreateJwtTest {
         //定义PayLoad
         HashMap<String, Object> tokenMap = new HashMap<>();
         tokenMap.put("id","1");
-        tokenMap.put("name","changgou");
+        tokenMap.put("name","changgou123456");
         tokenMap.put("roles","ROLE_VIP,ROLE_USER");
         //生成Jwt令牌
         Jwt jwt = JwtHelper.encode(JSON.toJSONString(tokenMap), new RsaSigner(rsaPrivate));

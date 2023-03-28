@@ -766,7 +766,7 @@
                         <li class="prev disabled">
                             <a th:href="@{${url}(pageNum=${page.upper})}">«上一页</a>
                         </li>
-                        <li th:each="i:${#numbers.sequence(page.lpage,page.rpage)}" th:class="${i}==${page.currentpage}?'active':''">
+                        <li th:each="i:${#numbers.sequence(page.lpage,page.rpage)}"  th:class="${i}==${page.currentpage}?'active':''">
                             <a th:href="@{${url}(pageNum=${i})}" th:text="${i}"></a>
                         </li>
                         <li class="next">

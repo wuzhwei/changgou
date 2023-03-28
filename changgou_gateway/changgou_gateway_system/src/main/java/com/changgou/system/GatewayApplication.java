@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @SpringBootApplication
 @EnableEurekaClient
 public class GatewayApplication {
@@ -16,13 +18,7 @@ public class GatewayApplication {
     }
 
     @Bean
-    public KeyResolver ipKeyResolver(){
-        return new KeyResolver() {
-            @Override
-            public Mono<String> resolve(ServerWebExchange exchange) {
-                return Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
-            }
-        };
-
+    public KeyResolver ipKeyResolver() {
+        return exchange -> Mono.just( Objects.requireNonNull( exchange.getRequest().getRemoteAddress() ).getHostName() );
     }
 }

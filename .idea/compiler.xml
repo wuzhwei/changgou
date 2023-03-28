@@ -11,6 +11,7 @@
         <module name="changgou-user-oauth" />
         <module name="changgou_eureka" />
         <module name="changgou_service_order_api" />
+        <module name="changgou_gateway_web" />
         <module name="changgou_common_fescar" />
         <module name="changgou_service_business_api" />
         <module name="changgou_service_user_api" />
@@ -46,6 +47,7 @@
       <module name="changgou_eureka" options="-parameters" />
       <module name="changgou_gateway" options="-parameters" />
       <module name="changgou_gateway_system" options="-parameters" />
+      <module name="changgou_gateway_web" options="-parameters" />
       <module name="changgou_service" options="-parameters" />
       <module name="changgou_service_api" options="-parameters" />
       <module name="changgou_service_business" options="-parameters" />

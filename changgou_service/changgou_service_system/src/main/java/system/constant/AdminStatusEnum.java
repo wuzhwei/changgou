@@ -5,8 +5,6 @@ import com.changgou.common.pojo.StatusCode;
 import lombok.AllArgsConstructor;
 
 /**
- * @Author: wzw
- * @Date: 2020/2/12 17:02
  * @Description: 用户异常信息
  */
 @AllArgsConstructor

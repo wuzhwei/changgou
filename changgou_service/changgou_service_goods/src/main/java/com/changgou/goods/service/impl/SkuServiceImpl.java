@@ -2,26 +2,93 @@ package com.changgou.goods.service.impl;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
+import com.changgou.goods.constant.GoodsStatusEnum;
 import com.changgou.goods.dao.SkuMapper;
+import com.changgou.goods.exception.GoodsException;
 import com.changgou.goods.pojo.Sku;
 import com.changgou.goods.service.SkuService;
 import com.changgou.goods.util.Condition;
+import com.changgou.order.pojo.OrderItem;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
+
+/**
+ * sku服务实现
+ **/
 @Service
 public class SkuServiceImpl implements SkuService {
-
     @Autowired
     private SkuMapper skuMapper;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     @Override
-    public List<Sku> findList(Map<String, Object> searchMap) {
+    public List<Sku> findAll() {
+        return skuMapper.selectAll();
+    }
+
+    @Override
+    public Sku findById(String id) {
+        return skuMapper.selectByPrimaryKey( id );
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addSku(Sku sku) {
+        skuMapper.insertSelective( sku );
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateSku(Sku sku) {
+        skuMapper.updateByPrimaryKeySelective( sku );
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteById(String id) {
+        skuMapper.deleteByPrimaryKey( id );
+    }
+
+    @Override
+    public List<Sku> findList(@NotNull Map<String, Object> searchMap) {
         return skuMapper.selectByExample( getExample( searchMap ) );
+    }
+
+    @Override
+    public Page<Sku> findPage(@NotNull Map<String, Object> searchMap, Integer pageNum, Integer pageSize) {
+        return PageHelper
+                .startPage( pageNum, pageSize )
+                .doSelectPage( () -> skuMapper.selectByExample( getExample( searchMap ) ) );
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void decrCount(String username) {
+        // 1.获取购物车的数据
+        List<OrderItem> orderItemList = redisTemplate.boundHashOps( "cart_" + username ).values();
+        // 2.循环扣减库存增加销量
+        for (OrderItem orderItem : orderItemList) {
+            int count = skuMapper.decrCount( orderItem );
+            if (count <= 0) {
+                throw new GoodsException( GoodsStatusEnum.ORDER_ERROR );
+            }
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resumeStockNumber(String skuId, Integer number) {
+        skuMapper.resumeStockNumber( skuId, number );
     }
 
     /**

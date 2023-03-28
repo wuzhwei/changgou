@@ -1,5 +1,10 @@
 package com.changgou.oauth.service.Impl;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import com.changgou.oauth.constant.OauthStatusEnum;
+import com.changgou.oauth.exception.OauthException;
 import com.changgou.oauth.service.AuthService;
 import com.changgou.oauth.util.AuthToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +23,18 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * @Description: 身份验证服务实现
+ */
 @Service
 public class AuthServiceImpl implements AuthService {
-
     @Autowired
-    public RestTemplate restTemplate;
-
+    private RestTemplate restTemplate;
     @Autowired
     private LoadBalancerClient loadBalancerClient;
     @Autowired
@@ -37,58 +42,60 @@ public class AuthServiceImpl implements AuthService {
     @Value("${auth.ttl}")
     private long ttl;
 
-    /**
-     * 申请令牌
-     *
-     * @param username
-     * @param password
-     * @param clientId
-     * @param clientSecret
-     * @return
-     */
-
-
     @Override
     public AuthToken login(String username, String password, String clientId, String clientSecret) {
-        //申请令牌
-        ServiceInstance choose = loadBalancerClient.choose("user-auth");
+        //1.申请令牌
+        ServiceInstance choose = loadBalancerClient.choose( "user-auth" );
         URI uri = choose.getUri();
         String url = uri + "/oauth/token";
-        MultiValueMap<Object, Object> body = new LinkedMultiValueMap<>();
-        body.add("grant_type","password");
-        body.add("username",username);
-        body.add("password",password);
 
-        MultiValueMap<Object, Object> headers = new LinkedMultiValueMap<>();
-        headers.add("Authorization",this.getHttpBasic(clientId,clientSecret));
-        HttpEntity<MultiValueMap<String,String>> requestEntity = new HttpEntity(body, headers);
-        restTemplate.setErrorHandler(new DefaultResponseErrorHandler(){
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+        body.add( "grant_type", "password" );
+        body.add( "username", username );
+        body.add( "password", password );
+
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add( "Authorization", this.getHttpBasic( clientId, clientSecret ) );
+
+        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>( body, headers );
+
+        restTemplate.setErrorHandler( new DefaultResponseErrorHandler() {
             @Override
             public void handleError(ClientHttpResponse response) throws IOException {
-                if (response.getRawStatusCode() != 400 && response.getRawStatusCode() != 401){
-                    super.handleError(response);
+                if (response.getRawStatusCode() != 400 && response.getRawStatusCode() != 401) {
+                    super.handleError( response );
                 }
-            }
-        });
-        ResponseEntity<Map> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requestEntity, Map.class);
-        Map map = responseEntity.getBody();
-        if (map == null || map.size() < 0){
-            //申请令牌失败
-            throw new RuntimeException("申请令牌失败");
 
+            }
+        } );
+        ResponseEntity<Map> responseEntity = restTemplate.exchange( url, HttpMethod.POST, requestEntity, Map.class );
+        Map map = responseEntity.getBody();
+        if (ObjectUtil.isEmpty( map )) {
+            //申请令牌失败
+            throw new OauthException( OauthStatusEnum.APPLY_FOR_TOKEN_ERROR );
         }
-        AuthToken authToken = new AuthToken();
-        authToken.setAccessToken((String) map.get("access_token"));
-        authToken.setRefreshToken((String)map.get("refresh_token"));
-        authToken.setJti((String)map.get("jti"));
-        stringRedisTemplate.boundValueOps(authToken.getJti()).set(authToken.getAccessToken(),
-                ttl, TimeUnit.SECONDS);
+        String accessToken = Convert.toStr( map.get( "access_token" ) );
+        String refreshToken = Convert.toStr( map.get( "refresh_token" ) );
+        String jti = Convert.toStr( map.get( "jti" ) );
+        if (StrUtil.isEmpty( accessToken ) || StrUtil.isEmpty( refreshToken ) || StrUtil.isEmpty( jti )) {
+            throw new OauthException( OauthStatusEnum.APPLY_FOR_TOKEN_ERROR );
+        }
+
+        //2.封装结果数据
+        AuthToken authToken = AuthToken.builder()
+                .accessToken( accessToken )
+                .refreshToken( refreshToken )
+                .jti( jti ).build();
+
+        //3.将jtl作为redis中的key,将jwt作为redis中的value
+        stringRedisTemplate.boundValueOps( authToken.getJti() ).set( authToken.getAccessToken(), ttl, TimeUnit.SECONDS );
+
         return authToken;
     }
 
-    private Object getHttpBasic(String clientId, String clientSecret) {
+    private String getHttpBasic(String clientId, String clientSecret) {
         String value = clientId + ":" + clientSecret;
-        byte[] encode = Base64Utils.encode(value.getBytes());
-        return "Basic "+new String(encode);
+        byte[] encode = Base64Utils.encode( value.getBytes() );
+        return "Basic " + new String( encode );
     }
 }

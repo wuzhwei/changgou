@@ -15,7 +15,6 @@ import java.util.Map;
 
 /**
  * 分类接口
- * @date 2020/8/8 15:56
  **/
 @RestController
 @RequestMapping("/category")

@@ -4,8 +4,8 @@ spring:
   application:
     name: business
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.31.6:3306/changgou_business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.31.6:3306/changgou_business?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false
     username: root
     password: 123456
   main:

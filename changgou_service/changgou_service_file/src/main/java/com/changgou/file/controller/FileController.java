@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Objects;
+
+/**
+ * @Description: 文件上传接口
+ */
 @RestController
 @RequestMapping("/file")
 public class FileController {
     @PostMapping("/upload")
-    public Result uploadFile(MultipartFile file){
+    public Result<Object> uploadFile(MultipartFile file) {
         try {
             //判断文件是否存在
             if (file == null) {
@@ -37,11 +41,11 @@ public class FileController {
             String[] uploadResult = FastDFSClient.upload( fastdfsfile );
             //封装返回结果
             String url = FastDFSClient.getTrackerUrl() + uploadResult[0] + "/" + uploadResult[1];
+            System.out.println(url);
             return Result.builder().flag( true ).code( StatusCode.OK ).message( "文件上传成功" ).data( url ).build();
         } catch (Exception e) {
             e.printStackTrace();
             return Result.builder().flag( false ).code( StatusCode.ERROR ).message( "文件上传失败" ).build();
         }
     }
-
 }
