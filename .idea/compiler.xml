@@ -10,8 +10,10 @@
         <module name="changgou_common_db" />
         <module name="changgou-user-oauth" />
         <module name="changgou_eureka" />
+        <module name="changgou_service_order_api" />
         <module name="changgou_common_fescar" />
         <module name="changgou_service_business_api" />
+        <module name="changgou_service_user_api" />
         <module name="changgou_service_system_api" />
         <module name="changgou_service_business" />
         <module name="changgou_common" />
@@ -26,8 +28,12 @@
         <module name="changgou_service_search" />
         <module name="changgou_service_goods" />
         <module name="changgou_service_search_api" />
+        <module name="changgou_service_user" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="changgou_user_auth" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -47,11 +53,15 @@
       <module name="changgou_service_file" options="-parameters" />
       <module name="changgou_service_goods" options="-parameters" />
       <module name="changgou_service_goods_api" options="-parameters" />
+      <module name="changgou_service_order_api" options="-parameters" />
       <module name="changgou_service_search" options="-parameters" />
       <module name="changgou_service_search_api" options="-parameters" />
       <module name="changgou_service_system" options="-parameters" />
       <module name="changgou_service_system_api" options="-parameters" />
+      <module name="changgou_service_user" options="-parameters" />
+      <module name="changgou_service_user_api" options="-parameters" />
       <module name="changgou_task" options="-parameters" />
+      <module name="changgou_user_auth" options="-parameters" />
       <module name="changgou_web" options="-parameters" />
     </option>
   </component>
