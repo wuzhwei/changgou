@@ -43,8 +43,23 @@ public interface AdminService {
      * @param admin 管理员数据
      */
     void updateAdmin(Admin admin);
-
+    /**
+     * 根据id删除管理员信息
+     *
+     * @param id 管理员id
+     */
     void deleteByAdminId(Integer id);
+
+    /**
+     * 多条件分页查询
+     *
+     * @param searchMap 条件集合
+     * @param pageNum   当前页码
+     * @param pageSize  每页显示条数
+     * @return 分页结果
+     */
+    Page<Admin> findPage(Map<String, Object> searchMap, Integer pageNum, Integer pageSize);
+
 
     /**
      * 登录

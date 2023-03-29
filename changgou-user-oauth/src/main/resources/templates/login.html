@@ -180,7 +180,7 @@
         methods: {
             login: function () {
                 app.msg = "正在登录";
-                axios.post("/api/oauth/login?username=" + app.username + "&password=" + app.password).then(function (response) {
+                axios.post("/oauth/login?username=" + app.username + "&password=" + app.password).then(function (response) {
                     if (response.data.flag) {
                         app.msg = "登录成功";
                         //跳转原地址

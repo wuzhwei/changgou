@@ -42,5 +42,5 @@ public interface OrderFeign {
      */
     @GetMapping("/order/orderInfoData")
     List<OrderInfoCount> getOrderInfoData(@RequestParam(required = false) String startTime,
-                                                  @RequestParam(required = false) String endTime);
+                                          @RequestParam(required = false) String endTime);
 }

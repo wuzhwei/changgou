@@ -5,12 +5,12 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
     <title>产品列表页</title>
-    <link rel="icon" href="/img/favicon.ico">
+    <link rel="icon" href="/static/img/favicon.ico">
 
 <!--    <link rel="stylesheet" type="text/css" href="/css/all.css"/>-->
 <!--    <link rel="stylesheet" type="text/css" href="/css/pages-list.css"/>-->
-    <link rel="stylesheet" type="text/css" href="../css/all.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/pages-list.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/all.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/pages-list.css"/>
 </head>
 
 <body>
@@ -766,7 +766,7 @@
                         <li class="prev disabled">
                             <a th:href="@{${url}(pageNum=${page.upper})}">«上一页</a>
                         </li>
-                        <li th:each="i:${#numbers.sequence(page.lpage,page.rpage)}" th:class="${i}==${page.currentpage}?'active':''">
+                        <li th:each="i:${#numbers.sequence(page.lpage,page.rpage)}"  th:class="${i}==${page.currentpage}?'active':''">
                             <a th:href="@{${url}(pageNum=${i})}" th:text="${i}"></a>
                         </li>
                         <li class="next">
@@ -789,7 +789,7 @@
                     <li class="yui3-u-1-4">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_01.png"/>
+                                <img src="/static/img/like_01.png"/>
                             </div>
                             <div class="attr">
                                 <em>Apple苹果iPhone 6s (A1699)</em>
@@ -808,7 +808,7 @@
                     <li class="yui3-u-1-4">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_03.png"/>
+                                <img src="/static/img/like_03.png"/>
                             </div>
                             <div class="attr">
                                 <em>金属A面，360°翻转，APP下单省300！</em>
@@ -827,7 +827,7 @@
                     <li class="yui3-u-1-4">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_04.png"/>
+                                <img src="/static/img/like_04.png"/>
                             </div>
                             <div class="attr">
                                 <em>256SSD商务大咖，完爆职场，APP下单立减200</em>
@@ -846,7 +846,7 @@
                     <li class="yui3-u-1-4">
                         <div class="list-wrap">
                             <div class="p-img">
-                                <img src="/img/like_02.png"/>
+                                <img src="/static/img/like_02.png"/>
                             </div>
                             <div class="attr">
                                 <em>Apple苹果iPhone 6s (A1699)</em>
@@ -976,7 +976,7 @@
                     </div>
                     <div class="yui3-u-1-6">
                         <h4>帮助中心</h4>
-                        <img src="/img/wx_cz.jpg">
+                        <img src="/static/img/wx_cz.jpg">
                     </div>
                 </div>
             </div>
@@ -1127,7 +1127,7 @@
 </div>
 
 
-<script type="text/javascript" src="../js/all.js"></script>
+<script type="text/javascript" src="/js/all.js"></script>
 </body>
 
 </html>

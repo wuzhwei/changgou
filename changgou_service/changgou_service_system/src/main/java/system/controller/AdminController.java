@@ -125,17 +125,17 @@ public class AdminController {
      * @param size      每页显示条数
      * @return 分页结果
      */
-//    @GetMapping("/search/{page}/{size}")
-//    public Result<PageResult<Admin>> findPage(@RequestParam Map<String, Object> searchMap, @PathVariable("page") Integer page, @PathVariable("size") Integer size) {
-//        Page<Admin> pageList = adminService.findPage( searchMap, page, size );
-//        return Result.<PageResult<Admin>>builder()
-//                .flag( true )
-//                .code( StatusCode.OK )
-//                .message( "查询成功" )
-//                .data( PageResult.<Admin>builder()
-//                        .total( pageList.getTotal() )
-//                        .rows( pageList.getResult() ).build() ).build();
-//    }
+    @GetMapping("/search/{page}/{size}")
+    public Result<PageResult<Admin>> findPage(@RequestParam Map<String, Object> searchMap, @PathVariable("page") Integer page, @PathVariable("size") Integer size) {
+        Page<Admin> pageList = adminService.findPage( searchMap, page, size );
+        return Result.<PageResult<Admin>>builder()
+                .flag( true )
+                .code( StatusCode.OK )
+                .message( "查询成功" )
+                .data( PageResult.<Admin>builder()
+                        .total( pageList.getTotal() )
+                        .rows( pageList.getResult() ).build() ).build();
+    }
 
     /**
      * 用户登录

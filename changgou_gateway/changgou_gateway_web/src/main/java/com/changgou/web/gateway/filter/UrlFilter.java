@@ -18,7 +18,7 @@ public class UrlFilter {
         String[] split = filterPath.replace( "**", "" ).split( "," );
 
         for (String value : split) {
-            if (url.startsWith( value )) {
+            if (value.startsWith(url)) {
                 //代表当前的访问地址是需要传递令牌的
                 return true;
             }
