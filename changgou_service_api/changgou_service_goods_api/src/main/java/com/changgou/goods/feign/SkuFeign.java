@@ -1,5 +1,6 @@
 package com.changgou.goods.feign;
 
+import com.changgou.common.pojo.Result;
 import com.changgou.goods.pojo.Sku;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,5 +18,8 @@ public interface SkuFeign {
      */
     @GetMapping("/sku/spu/{spuId}")
     List<Sku> findSkuListBySpuId(@PathVariable("spuId") String spuId);
+
+    @GetMapping("/sku/{id}")
+    public Result<Sku> findById(@PathVariable("id") String id);
 
 }

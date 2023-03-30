@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 /**
- * @Author: Haotian
- * @Date: 2020/2/26 21:27
  * @Description: 购物车对外接口
  */
 @FeignClient(name = "order")

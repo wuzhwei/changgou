@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author: Haotian
- * @Date: 2020/2/27 22:16
- * @Description: 订单服务对外接口
+ * 订单服务对外接口
  */
 @FeignClient(name = "order")
 public interface OrderFeign {
